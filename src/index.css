@@ -1,0 +1,78 @@
+.app {
+    background: linear-gradient(rgb(72,174,243) ,rgb(66, 147, 253));
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+    margin:0;
+    font-family: "Poppins",sans-serif;
+}
+
+.search-button {
+    border-radius: 50%;
+    border: 0;
+    background: none;
+    font-size: 20px;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.6)
+}
+
+.search-bar {
+    width: 230px;
+    font-size: 20px;
+    padding-bottom: 0;
+    color: rgba(255, 255, 255, 0.8);
+    margin-right: -25px;
+    margin-top: 5px;
+}
+
+.search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.search-bar:focus {
+    border-bottom: rgba(255, 255, 255, 0.5) 2px solid;
+}
+
+.current-weather {
+    color:rgb(255, 255, 255);
+    margin-left: 30px;
+}
+
+.current-weather h1 {
+    font-size: 55px;
+}
+
+.current-weather h6 {
+    font-size: 18px;
+    margin: 0px;
+}
+
+.section {
+    background-color: rgba(255, 255, 255, 0.2);
+    color:rgb(255, 255, 255);
+    border:rgba(255, 255, 255, 0.6) 1px solid;
+    border-radius: 15px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.vl {
+    width: 0;
+    border-right:rgba(255, 255, 255, 0.6) 1px solid;
+}
+
+.section div:not(.vl) {
+    margin: auto;
+}
