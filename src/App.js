@@ -3,15 +3,46 @@ import "./index.css"
 import Current from "./Current"
 import Extra from "./Extra"
 import timeConvert from "./Time";
+let extras=[]
 
 function App() {
-  const [weather,changeWeather]=useState({"value" : 0})
+  const [weather,changeWeather]=useState({current: {"value" : 0}})
   const [searchText, changeSearchText]=useState('')
+  const update = (current)=> {
+      let data=[
+        {
+          Wind: current.wind.speed+" km/h",
+          Humidity: current.main.humidity+"%",
+          Pressure:current.main.pressure+" millibars"
+        },
+        {
+          Sunrise: timeConvert(current.sys.sunrise,current.timezone),
+          Sunset: timeConvert(current.sys.sunset,current.timezone)
+        }
+      ]
+      extras=data.map(item=> {
+        let items=[]
+        let values=[]
+        Object.keys(item).forEach(key => {
+          items.push(key)
+          values.push(item[key])
+        })
+        return <Extra items={items} values={values} />
+      })
+    }
   const handleClick = (event) => {
+    let temp,temp2
     event.preventDefault()
     fetch(`http://api.openweathermap.org/data/2.5/weather?q=${searchText}&units=metric&APPID=cd1840beedafe3ce968e746941f44e2c`, {mode: "cors"})
     .then(item => item.json())
-    .then(item => changeWeather(item))
+    .then(item=>temp=item)
+    .then(()=>{
+      fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchText}&appid=cd1840beedafe3ce968e746941f44e2c`, {mode: "cors"})
+      .then(item => item.json())
+      .then(item => temp2=item)
+      .then(()=> {update(temp)})
+      .then(() => changeWeather(()=>{return {current: temp,forecast: temp2}}))
+    })
   }
   const handleChange = (event) => {
     changeSearchText(event.target.value)
@@ -25,24 +56,23 @@ function App() {
             <button type="submit" className="search-button"><i className="fa fa-search" aria-hidden="true"></i></button>
           </form>
         </div>
-        <Weather weather={weather} />
+        <Weather current={weather.current} />
       </div>
     </div>
   );
 }
 
 function Weather(props) {
-  if (props.weather.value===0) {
+  if (props.current.value===0) {
     
   }
-  else if (props.weather.error) {
-    return <p>{JSON.stringify(props.weather)}</p>
+  else if (props.current.error) {
+    return <p>{JSON.stringify(props.current)}</p>
   }
   else {
     return (<div>
-        <Current weather={props.weather} />
-        <Extra items={["Wind","Humidity","Pressure"]} values={[props.weather.wind.speed+" km/h",props.weather.main.humidity+"%",props.weather.main.pressure+" millibars"]} />
-        <Extra items={["Sunrise","Sunset"]} values={[timeConvert(props.weather.sys.sunrise,props.weather.timezone),timeConvert(props.weather.sys.sunset,props.weather.timezone)]} />
+        <Current current={props.current} />
+        {extras}
       </div>
   )
     
