@@ -29,7 +29,7 @@ function App() {
 
 function Weather(props) {
   if (props.weather.value===0) {
-    return <p>Click to find weather</p>
+    
   }
   else if (props.weather.error) {
     return <p>{JSON.stringify(props.weather)}</p>
