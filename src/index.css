@@ -76,3 +76,7 @@ body {
 .section div:not(.vl) {
     margin: auto;
 }
+
+.section > div > h6 {
+    text-align: center;
+}
