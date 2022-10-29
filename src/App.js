@@ -81,7 +81,7 @@ function App() {
       return <Extra id={index} key={index} items={items} values={values} />
     })
   }
-  const handleClick = (event) => {
+  const handleSubmit = (event) => {
     let temp,temp2
     event.preventDefault()
     fetch(`http://api.openweathermap.org/data/2.5/weather?q=${searchText}&units=metric&APPID=cd1840beedafe3ce968e746941f44e2c`, {mode: "cors"})
@@ -100,14 +100,37 @@ function App() {
       .then(() => changeWeather(()=>{return {current: temp,forecast: temp2}}))
     }).catch(item=>{changeErr({isError: true,error: item})})
   }
+  const handleClick = () => {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position)=> {
+        let temp,temp2
+      fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=cd1840beedafe3ce968e746941f44e2c`, {mode: "cors"})
+      .then(item => item.json())
+      .then(item=> {
+        if(item.cod!==200){
+          throw item
+        }
+        else return item})
+      .then(item=>temp=item)
+      .then(()=>{
+        fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&appid=cd1840beedafe3ce968e746941f44e2c`, {mode: "cors"})
+        .then(item => item.json())
+        .then(item => temp2=item)
+        .then(()=> {update(temp,temp2)})
+        .then(() => changeWeather(()=>{return {current: temp,forecast: temp2}}))
+      }).catch(item=>{changeErr({isError: true,error: item})})
+        })
+    }
+  }
   const handleChange = (event) => {
     changeSearchText(event.target.value)
   }
   return (
     <div style={{background: color}} className="app">
       <div className="main">
-        <div>
-          <form className="search" onSubmit={handleClick} >
+        <div className="top-bar">
+          <button onClick={handleClick} className="btn btn-outline-light">Use Current Location</button>
+          <form className="search" onSubmit={handleSubmit} >
             <input placeholder="Weather in your city" className=" search-bar form-control-plaintext" onChange={handleChange}></input>
             <button type="submit" className="search-button"><i className="fa fa-search" aria-hidden="true"></i></button>
           </form>

@@ -94,3 +94,25 @@ body {
 .error {
     color:rgba(255, 255, 255, 0.5);
 }
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.top-bar > .btn {
+    margin-top: 12px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    border: none;
+}
+
+.top-bar > .btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color:rgba(255, 255, 255, 1)
+} 
+
+.top-bar > .btn:active {
+    color: rgba(255, 255, 255, 1)
+}
