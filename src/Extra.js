@@ -1,6 +1,5 @@
 export default function Extra(props) {
     let items =props.items.map((item,index) => {
-        console.log(props.values[index])
         return (<>
             <div>
                 <h2>{item}</h2>
@@ -10,7 +9,7 @@ export default function Extra(props) {
         </>)
     })
     return (
-        <div className="section">
+        <div className={props.id===2?"section scroll":"section"}>
             {items}
         </div>
     )

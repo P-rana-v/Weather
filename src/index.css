@@ -1,5 +1,4 @@
 .app {
-    background: linear-gradient(rgb(72,174,243) ,rgb(66, 147, 253));
     margin: 0;
     height: 100vh;
     width: 100vw;
@@ -77,6 +76,14 @@ body {
     margin: auto;
 }
 
-.section > div > h6 {
+.section > div > * {
     text-align: center;
+}
+
+.scroll {
+    overflow: scroll;
+}
+
+.scroll div:not(.vl) {
+    margin: auto 50px;
 }
