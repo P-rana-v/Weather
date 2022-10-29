@@ -45,6 +45,9 @@ body {
 .current-weather {
     color:rgb(255, 255, 255);
     margin-left: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .current-weather h1 {
@@ -86,4 +89,8 @@ body {
 
 .scroll div:not(.vl) {
     margin: auto 50px;
+}
+
+.error {
+    color:rgba(255, 255, 255, 0.5);
 }
