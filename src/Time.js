@@ -1,21 +1,11 @@
 const timeConvert = (timestamp,timezone) => {
     let date=new Date(timestamp*1000)
-    let hrsTimezone=Math.floor(Math.abs(timezone)/3600)
-    let minsTimezone=(Math.abs(timezone)-hrsTimezone*3600)/60
-    if (timezone<0) {
-        hrsTimezone=-hrsTimezone
-        minsTimezone=-minsTimezone
-    }
-    let hrsUTC= date.getUTCHours()
-    let minsUTC=date.getUTCMinutes()
-    let mins=String(minsUTC+minsTimezone)
-    let hrs=String(hrsUTC+hrsTimezone)
-    if (mins.length===1) {
-        mins="0"+mins
-    }
-    if (hrs.length===1) {
-        hrs="0"+hrs
-    }
+    let offset=date.getTimezoneOffset()*60
+    let newDate=new Date((timestamp+offset+timezone)*1000)
+    let hrs=String(newDate.getHours())
+    let mins=String(newDate.getMinutes())
+    if(hrs.length===1) hrs="0"+hrs
+    if(mins.length===1) mins="0"+mins
     return hrs+" : "+mins
 }
 
